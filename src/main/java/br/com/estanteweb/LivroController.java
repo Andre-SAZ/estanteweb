@@ -111,6 +111,28 @@ public class LivroController {
         return "redirect:/livros/" + id;
     }
 
+    // Tela de confirmação de remoção de livro
+    @GetMapping("/livros/{id}/excluir")
+    public String confirmarExclusao(@PathVariable Long id, Model model) {
+        Livro livro = repositorio.buscarPorId(id);
+        if (livro == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        model.addAttribute("livro", livro);
+        return "livro-excluir";
+    }
+
+    // Processamento da remoção de livro
+    @PostMapping("/livros/{id}/excluir")
+    public String excluirLivro(@PathVariable Long id) {
+        Livro livro = repositorio.buscarPorId(id);
+        if (livro == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        repositorio.excluir(id);
+        return "redirect:/livros/html";
+    }
+
     // Formulário de novo livro
     @GetMapping("/livros/novo")
     public String novoLivro() {

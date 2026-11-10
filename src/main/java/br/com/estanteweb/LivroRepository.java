@@ -33,6 +33,12 @@ public class LivroRepository {
         jdbcTemplate.update(sql, livro.getTitulo(), livro.getAutor(), livro.getAno(), livro.getPreco(), livro.getId());
     }
 
+    // Remove um livro do banco pelo ID
+    public void excluir(Long id) {
+        String sql = "DELETE FROM livro WHERE id = ?";
+        jdbcTemplate.update(sql, id);
+    }
+
     // Busca todos os livros no banco
     public List<Livro> listarTodos() {
 

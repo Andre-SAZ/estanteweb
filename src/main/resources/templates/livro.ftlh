@@ -18,7 +18,8 @@
 </#if>
 
 <p>
-    <a href="/livros/${livro.id?c}/editar">Editar este livro</a>
+    <a href="/livros/${livro.id?c}/editar">Editar este livro</a> |
+    <a href="/livros/${livro.id?c}/excluir">Remover este livro</a>
 </p>
 
 <p><a href="/livros/html">Voltar para o acervo</a></p>
