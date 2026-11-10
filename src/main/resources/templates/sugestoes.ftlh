@@ -13,6 +13,8 @@
             <li>
                 ${sugestao.nomeCliente} sugeriu
                 <strong>${sugestao.livroSugerido}</strong>
+                - <a href="/sugestoes/${sugestao.id?c}/editar">Editar</a>
+                - <a href="/sugestoes/${sugestao.id?c}/excluir">Remover</a>
             </li>
         </#list>
     </ul>

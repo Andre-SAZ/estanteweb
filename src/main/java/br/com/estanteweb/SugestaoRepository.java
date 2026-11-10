@@ -42,4 +42,26 @@ public class SugestaoRepository {
         }
         return sugestoes;
     }
+
+    // Busca uma sugestão pelo ID
+    public Sugestao buscarPorId(Long id) {
+        String sql = "SELECT * FROM sugestao WHERE id = ?";
+        List<Map<String, Object>> linhas = jdbcTemplate.queryForList(sql, id);
+        if (linhas.isEmpty()) {
+            return null;
+        }
+        return Sugestao.deMap(linhas.get(0));
+    }
+
+    // Atualiza os dados de uma sugestão existente
+    public void atualizar(Sugestao sugestao) {
+        String sql = "UPDATE sugestao SET nome_cliente = ?, livro_sugerido = ? WHERE id = ?";
+        jdbcTemplate.update(sql, sugestao.getNomeCliente(), sugestao.getLivroSugerido(), sugestao.getId());
+    }
+
+    // Remove uma sugestão do banco de dados pelo ID
+    public void excluir(Long id) {
+        String sql = "DELETE FROM sugestao WHERE id = ?";
+        jdbcTemplate.update(sql, id);
+    }
 }
