@@ -27,6 +27,12 @@ public class LivroRepository {
         jdbcTemplate.update(sql, livro.getTitulo(), livro.getAutor(), livro.getAno(), livro.getPreco());
     }
 
+    // Atualiza os dados de um livro existente
+    public void atualizar(Livro livro) {
+        String sql = "UPDATE livro SET titulo = ?, autor = ?, ano = ?, preco = ? WHERE id = ?";
+        jdbcTemplate.update(sql, livro.getTitulo(), livro.getAutor(), livro.getAno(), livro.getPreco(), livro.getId());
+    }
+
     // Busca todos os livros no banco
     public List<Livro> listarTodos() {
 

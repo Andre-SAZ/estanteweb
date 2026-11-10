@@ -56,6 +56,61 @@ public class LivroController {
         return "livro";
     }
 
+    // Formulário de edição de livro
+    @GetMapping("/livros/{id}/editar")
+    public String editarLivro(@PathVariable Long id, Model model) {
+        Livro livro = repositorio.buscarPorId(id);
+        if (livro == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        model.addAttribute("livro", livro);
+        return "livro-editar";
+    }
+
+    // Processamento da edição de livro com validação
+    @PostMapping({"/livros/{id}", "/livros/{id}/editar"})
+    public String salvarEdicao(
+            @PathVariable Long id,
+            @RequestParam(required = false) String titulo,
+            @RequestParam(required = false) String autor,
+            @RequestParam(required = false, defaultValue = "0") int ano,
+            @RequestParam(required = false, defaultValue = "0") double preco,
+            Model model) {
+
+        Livro existente = repositorio.buscarPorId(id);
+        if (existente == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        if (titulo == null || titulo.isBlank()
+                || autor == null || autor.isBlank()
+                || preco <= 0) {
+
+            Livro livro = new Livro();
+            livro.setId(id);
+            livro.setTitulo(titulo);
+            livro.setAutor(autor);
+            livro.setAno(ano);
+            livro.setPreco(preco);
+
+            model.addAttribute("erro", "Preencha título, autor e um preço maior que zero.");
+            model.addAttribute("livro", livro);
+
+            return "livro-editar";
+        }
+
+        Livro livro = new Livro();
+        livro.setId(id);
+        livro.setTitulo(titulo);
+        livro.setAutor(autor);
+        livro.setAno(ano);
+        livro.setPreco(preco);
+
+        repositorio.atualizar(livro);
+
+        return "redirect:/livros/" + id;
+    }
+
     // Formulário de novo livro
     @GetMapping("/livros/novo")
     public String novoLivro() {
