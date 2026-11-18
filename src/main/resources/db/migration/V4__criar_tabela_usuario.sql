@@ -7,3 +7,4 @@ CREATE TABLE usuario (
 
 INSERT INTO usuario (nome, email, senha) VALUES
 ('Marta', 'marta@estanteweb.com', 'estante123');
+

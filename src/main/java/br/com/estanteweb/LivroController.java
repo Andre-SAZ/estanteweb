@@ -258,12 +258,8 @@ public class LivroController {
 
         sb.append("</ul>");
 
-        return ResponseEntity
-                .ok()
-                .header(
-                        "X-Total-Encontrados",
-                        String.valueOf(livros.size())
-                )
+        return ResponseEntity.ok()
+                .header("X-Total-Encontrados", String.valueOf(livros.size()))
                 .body(sb.toString());
     }
 
